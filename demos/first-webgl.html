@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="webgl" width="600" height="400"></canvas>
+    <script>
+        // 绘制画布颜色
+        function main() {
+            const canvas = document.querySelector('#webgl');
+            const gl = canvas.getContext('webgl');
+
+            if(!gl) {
+                console.info('not support webgl');
+                return;
+            }
+            // clear to black
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            // clear canvas
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            console.log(gl);
+        }
+
+        main();
+    </script>
+</body>
+</html>
