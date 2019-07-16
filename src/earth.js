@@ -1,4 +1,4 @@
-import {mat4, initShaders,initTextures, initArrayBuffer, getMvpMatrix} from '../utils/index.js'
+import {mat4, initShaders,initTextures, initArrayBuffer, getMvpMatrix} from './utils/index.js'
 
 const VSHADER_SOURCE =`
   attribute vec4 a_Position; 
@@ -81,9 +81,7 @@ gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix);
 gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix);
 gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix);
 
-const url0 = '../image/earth.jpeg'
-const url1 = '../image/butterfly.png'
-const url2 = '../image/ceshi.jpeg'
+const url0 = 'https://st-gdx.dancf.com/gaodingx/745312490/design/20190524-134937-1aa3.jpg'
 mat4.rotate(modelMatrix,modelMatrix,-23.66*Math.PI/180,[0,0,1]);
 initTextures(gl, [url0]).then(() => {
   draw()
