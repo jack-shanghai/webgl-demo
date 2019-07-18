@@ -1,5 +1,4 @@
-import initShaders from '../utils/initShaders.js'
-import * as mat4 from '../node_modules/gl-matrix/esm/mat4.js'
+import {mat4, initShaders, initArrayBuffer, getMvpMatrix} from './utils/index.js'
 
 const VSHADER_SOURCE =`
   attribute vec4 a_Position; 
@@ -104,12 +103,7 @@ function moveEye(eye,angle){
   eye[1] = eye[1];
   eye[2] = -x*Math.sin(angle)+z*Math.cos(angle);
 }
-function getMvpMatrix(mvpMatrix, modelMatrix, viewMatrix, perspectiveMatrix){
-  let tempMatrix = mat4.create()
-  mat4.multiply(tempMatrix, perspectiveMatrix, viewMatrix)
-  mat4.multiply(mvpMatrix,tempMatrix,modelMatrix)
-  return mvpMatrix
-}
+
 
 function initVertexBuffers(gl) {
   const SPHERE_DIV = 100;
@@ -166,12 +160,3 @@ function initVertexBuffers(gl) {
   return indices.length;
 }
 
-function initArrayBuffer (gl, attribute, data, type, num) {
-  const buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
-  const aAttribute = gl.getAttribLocation(gl.program, attribute)
-  gl.vertexAttribPointer(aAttribute, num, type, false, 0, 0)
-  gl.enableVertexAttribArray(aAttribute)
-  return true
-}

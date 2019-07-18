@@ -1,6 +1,4 @@
-import initShaders from '../utils/initShaders.js'
-import * as mat4 from '../node_modules/gl-matrix/esm/mat4.js'
-import initTextures from '../utils/initTexture.js'
+import {mat4, initShaders,initTextures, initArrayBuffer, getMvpMatrix} from './utils/index.js'
 
 const VSHADER_SOURCE =`
   attribute vec4 a_Position; 
@@ -50,7 +48,6 @@ const gl = canvas.getContext('webgl');
 
 initShaders(gl,VSHADER_SOURCE,FSHADER_SOURCE);
 const n = initVertexBuffers(gl);
-console.info(n)
 
 gl.clearColor(0.0, 0.0, 0.5, 1.0);
 gl.enable(gl.DEPTH_TEST);
@@ -84,11 +81,10 @@ gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix);
 gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix);
 gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix);
 
-const url0 = '../image/earth.jpeg'
-const url1 = '../image/butterfly.png'
-const url2 = '../image/ceshi.jpeg'
+const url = 'https://st-gdx.dancf.com/gaodingx/745312490/design/20190524-134937-1aa3.jpg'
 mat4.rotate(modelMatrix,modelMatrix,-23.66*Math.PI/180,[0,0,1]);
-initTextures(gl, n, [url1]).then(() => {
+lo
+initTextures(gl, n, [url]).then(() => {
   draw()
 })
   
@@ -102,12 +98,6 @@ function draw(){
   window.requestAnimationFrame(draw);
 }
 
-function getMvpMatrix(mvpMatrix, modelMatrix, viewMatrix, perspectiveMatrix){
-  let tempMatrix = mat4.create()
-  mat4.multiply(tempMatrix, perspectiveMatrix, viewMatrix)
-  mat4.multiply(mvpMatrix,tempMatrix,modelMatrix)
-  return mvpMatrix
-}
 
 function initVertexBuffers(gl) {
   const SPHERE_DIV = 270;
@@ -167,14 +157,4 @@ function initVertexBuffers(gl) {
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
   
   return indices.length;
-}
-
-function initArrayBuffer (gl, attribute, data, type, num) {
-  const buffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
-  const aAttribute = gl.getAttribLocation(gl.program, attribute)
-  gl.vertexAttribPointer(aAttribute, num, type, false, 0, 0)
-  gl.enableVertexAttribArray(aAttribute)
-  return true
 }

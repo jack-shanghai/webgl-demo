@@ -7,9 +7,10 @@ export default function initTextures (gl, urls) {
     const samplerLoc = gl.getUniformLocation(gl.program, `uSampler${i}`)
     const promise = loadImage(urls[i]).then(
       (img) => {
-        console.info(`img${i} loaded`)
-        gl.activeTexture(gl[`TEXTURE${i}`])
-        loadTexture(gl, texture, samplerLoc, img, i)
+        console.info(`img${i} loaded`);
+        gl.activeTexture(gl[`TEXTURE${i}`]);
+        loadTexture(gl, texture, samplerLoc, img, i);
+        return texture;
       }
     )
     promises.push(promise)
