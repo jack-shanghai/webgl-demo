@@ -62,7 +62,7 @@ window.onload = function() {
   document.body.appendChild(gl.canvas);
   gl.clearColor(0, 0, 0, 1);
 
-  water = new Water();
+  water = new Water(GL);
   renderer = new Renderer();
   cubemap = new Cubemap({
     xneg: document.getElementById('xneg'),

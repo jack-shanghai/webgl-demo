@@ -6,7 +6,7 @@
  * Released under the MIT license
  */
 
-var helperFunctions = `
+const helperFunctions = `
   const float IOR_AIR = 1.0;
   const float IOR_WATER = 1.333;
   const vec3 abovewaterColor = vec3(0.25, 1.0, 1.25);
@@ -113,7 +113,7 @@ function Renderer() {
   this.causticTex = new GL.Texture(1024, 1024);
   this.waterMesh = GL.Mesh.plane({ detail: 200 });
   this.waterShaders = [];
-  for (var i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i++) {
     this.waterShaders[i] = new GL.Shader(`
       uniform sampler2D water;
       varying vec3 position;
@@ -238,7 +238,7 @@ function Renderer() {
     `);
   this.sphereCenter = new GL.Vector();
   this.sphereRadius = 0;
-  var hasDerivatives = !!gl.getExtension('OES_standard_derivatives');
+  const hasDerivatives = !!gl.getExtension('OES_standard_derivatives');
   this.causticsShader = new GL.Shader(helperFunctions + `
     varying vec3 oldPos;
     varying vec3 newPos;
@@ -304,7 +304,7 @@ function Renderer() {
 
 Renderer.prototype.updateCaustics = function(water) {
   if (!this.causticsShader) return;
-  var this_ = this;
+  const this_ = this;
   this.causticTex.drawTo(function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     water.textureA.bind(0);
@@ -318,13 +318,13 @@ Renderer.prototype.updateCaustics = function(water) {
 };
 
 Renderer.prototype.renderWater = function(water, sky) {
-  var tracer = new GL.Raytracer();
+  const tracer = new GL.Raytracer();
   water.textureA.bind(0);
   this.tileTexture.bind(1);
   sky.bind(2);
   this.causticTex.bind(3);
   gl.enable(gl.CULL_FACE);
-  for (var i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i++) {
     gl.cullFace(i ? gl.BACK : gl.FRONT);
     this.waterShaders[i].uniforms({
       light: this.lightDir,

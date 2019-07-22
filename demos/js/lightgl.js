@@ -1473,27 +1473,29 @@ function Shader(vertexSource, fragmentSource) {
   fragmentSource = followScriptTagById(fragmentSource);
 
   // Headers are prepended to the sources to provide some automatic functionality.
-  var header = '\
-    uniform mat3 gl_NormalMatrix;\
-    uniform mat4 gl_ModelViewMatrix;\
-    uniform mat4 gl_ProjectionMatrix;\
-    uniform mat4 gl_ModelViewProjectionMatrix;\
-    uniform mat4 gl_ModelViewMatrixInverse;\
-    uniform mat4 gl_ProjectionMatrixInverse;\
-    uniform mat4 gl_ModelViewProjectionMatrixInverse;\
-  ';
-  var vertexHeader = header + '\
-    attribute vec4 gl_Vertex;\
-    attribute vec4 gl_TexCoord;\
-    attribute vec3 gl_Normal;\
-    attribute vec4 gl_Color;\
-    vec4 ftransform() {\
-      return gl_ModelViewProjectionMatrix * gl_Vertex;\
-    }\
-  ';
-  var fragmentHeader = '\
-    precision highp float;\
-  ' + header;
+  const header = `
+    uniform mat3 gl_NormalMatrix;
+    uniform mat4 gl_ModelViewMatrix;
+    uniform mat4 gl_ProjectionMatrix;
+    uniform mat4 gl_ModelViewProjectionMatrix;
+    uniform mat4 gl_ModelViewMatrixInverse;
+    uniform mat4 gl_ProjectionMatrixInverse;
+    uniform mat4 gl_ModelViewProjectionMatrixInverse;
+  `;
+  const vertexHeader = header + `
+    attribute vec4 gl_Vertex;
+    attribute vec4 gl_TexCoord;
+    attribute vec3 gl_Normal;
+    attribute vec4 gl_Color;
+    vec4 ftransform() {
+      return gl_ModelViewProjectionMatrix * gl_Vertex;
+    }
+  `
+  
+ ;
+  const fragmentHeader = `
+    precision highp float;
+  ` + header;
 
   // Check for the use of built-in matrices that require expensive matrix
   // multiplications to compute, and record these in `usedMatrices`.
